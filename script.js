@@ -3,5 +3,10 @@ const botaoMostrarPalavras = document.querySelector('#botao-palavrachave');
 botaoMostrarPalavras.addEventListener('click', mostraPalavraChave);
 
 function mostraPalavraChave() {
-    alert("Fui clicado!");
+    //alert("Fui clicado!");
+    const texto = document.querySelector('#entrada-de-texto').value;
+    const campoResultado = document.querySelector('#resultado-palavrachave');
+
+    campoResultado.textcontent = texto;
+
 }
