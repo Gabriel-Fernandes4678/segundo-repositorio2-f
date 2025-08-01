@@ -1,8 +1,8 @@
-import {PALAVRAS_RUINS} from "./palavrasRuins";
+import {PALAVRAS_RUINS} from "./palavrasRuins.js";
 
 const botaoMostraPalavras = document.querySelector('#botao-palavrachave');
 
-botaoMostraPalavras.addEventListener('click', mostraPalavrasChave)
+botaoMostraPalavras.addEventListener('click', mostraPalavrasChave);
 
 function mostraPalavrasChave() {
     //alert("Fui clicado!");
@@ -14,9 +14,9 @@ function mostraPalavrasChave() {
 }
 
 function processaTexto(texto) {
-    //let palavras = texto.split(/\s+/);     "retirar espaços"
-    //let palavras = texto.split(/[^a-zA-Z]+/);  "letras minusculas e maiusculas"
-    let palavras = texto.split(/\P{L}+/u);     /* \P negação; {L} conjunto de letras; + uma ou mais ocorrências; u Unicode*/
+    //let palavras = texto.split(/\s+/);  "retirar espaços"
+    //let palavras = texto.split(/[^a-zA-Z]+/); "letras minusculas e maiusculas"
+    let palavras = texto.split(/\P{L}+/u);  // \P negação;  {L} conjunto de letras; + uma ou mais ocorrências; u Unicode
 
     for (let i in palavras) {
         palavras[i] = palavras[i].toLowerCase();
@@ -24,7 +24,7 @@ function processaTexto(texto) {
 
     palavras = tiraPalavrasRuins(palavras);
 
-    const frequencias = contraFrequencias(palavras);
+    const frequencias = contaFrequencias(palavras);
 
     let ordenadas = Object.keys(frequencias).sort(ordenaPalavra);
     function ordenaPalavra(p1, p2) {
@@ -33,24 +33,24 @@ function processaTexto(texto) {
     return ordenadas.slice(0,10);
 }
 
-function contraFrequencias (palavras) {
+function contaFrequencias(palavras) {
     let frequencias = {};
     for ( let i of palavras) {
         frequencias[i] = 0;
-        for ( let j of palavras){
+        for ( let j of palavras) {
             if( i == j ) {
                 frequencias[i]++;
             }
         }
     }
-    return frequencias; 
+    return frequencias;
 }
 
 function tiraPalavrasRuins(palavras) {
-   // const PALAVRAS_RUINS = new setInterval(["para", "uma", "nós"]); //tem muito mais!!
+    //const PALAVRAS_RUINS = new setInterval(["para", "uma", "nós"]); //tem muito mais no arquivo JS importado
     const palavrasBoas =[];
     for (let palavra of palavras) {
-        if (PALAVRAS_RUINS.has(palavra) && palavra.lenght > 2) {
+        if (!PALAVRAS_RUINS.has(palavra) && palavra.length > 2) {
             palavrasBoas.push(palavra);
         }
     }
